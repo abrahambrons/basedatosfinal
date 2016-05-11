@@ -1,0 +1,63 @@
+create or replace
+trigger mandar_al_chino
+FOR INSERT OR UPDATE OF disponibilidad ON mensajero COMPOUND TRIGGER
+
+pd_id number(5);
+us_id number(5);
+ms_id number(5);
+
+
+AFTER EACH ROW IS
+BEGIN
+
+IF INSERTING THEN  ----------------ya anda!!!
+  IF :NEW.disponibilidad = 0 THEN
+   
+  -- BUSCA UN ID DE USUARIO EN ESPERA QUE ESTE EN LA MISMA CIUDAD QUE EL USUARIO INGRESA
+    select nvl((select us.id from pedido pd join usuario us on(pd.usuario_id = us.id) join direccion_user dc
+on(dc.usuario_id = us.id and dc.ciudad_tb_id = :NEW.ciudad_tb_id) where pd.estado = 0 and rownum <2),0) into us_id from dual;
+
+    if us_id > 0 then -- entra si existe algun usuario con pedido en 0
+     select id into pd_id from pedido where usuario_id = us_id; -- obtiene el id del pedido en 0
+     ms_id := :NEW.id; -- obtengo el id del mensajero que acaban de actualizar a estado 0
+    end if;    
+  END IF;
+END IF;
+
+
+
+
+IF UPDATING THEN
+  IF :NEW.disponibilidad = 0 THEN
+  -- BUSCA UN ID DE USUARIO EN ESPERA QUE ESTE EN LA MISMA CIUDAD QUE EL USUARIO INGRESA
+    select nvl((select us.id from pedido pd join usuario us on(pd.usuario_id = us.id) join direccion_user dc
+on(dc.usuario_id = us.id and dc.ciudad_tb_id = :OLD.ciudad_tb_id) where pd.estado = 0 and rownum <2),0) into us_id from dual;
+
+    if us_id > 0 then -- entra si existe algun usuario con pedido en 0
+     select id into pd_id from pedido where usuario_id = us_id; -- obtiene el id del pedido en 0
+     ms_id := :NEW.id; -- obtengo el id del mensajero que acaban de actualizar a estado 0
+    end if;    
+  END IF;
+END IF;
+END AFTER EACH ROW;
+
+
+
+AFTER STATEMENT IS
+
+BEGIN
+
+  if ms_id is not null and us_id >0 then
+    update pedido set estado = 1, mensajero_id = ms_id where id = pd_id;
+    update mensajero set disponibilidad =1 where id = ms_id;
+  end if;
+END AFTER STATEMENT; 
+
+end mandar_al_chino;
+
+
+
+
+
+
+
