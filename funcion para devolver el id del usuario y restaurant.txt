@@ -1,0 +1,22 @@
+create or replace function id_return
+( tabla in varchar2, camp_unico in varchar2)
+return number as
+id_tabla number(5);
+begin
+if tabla = 'usuario' and camp_unico is not null then
+select id into id_tabla from usuario where correo = camp_unico;
+RETURN id_tabla;
+end if;
+
+if tabla = 'usuario' and camp_unico is null then
+select max(id) into id_tabla from usuario;
+RETURN id_tabla;
+end if;
+
+if tabla = 'restaurant' and camp_unico is null then
+select max(id) into id_tabla from restaurant;
+RETURN id_tabla;
+end if;
+
+  return null;  
+end id_return;

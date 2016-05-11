@@ -1,0 +1,325 @@
+--TRIGGERS INCREMENT ID  -----------------------------------INGRESARLOS 1 X 1 PORQUE TODOS NO ENTRAN DE GOLPE
+create or replace trigger increment_id_usuario 
+before insert on usuario
+for each row 
+declare
+id_max usuario.id%type;
+begin
+select max(id) into id_max from usuario;
+if :NEW.id is null then   -- CUANDO NO REFLEJO LA COLUMNA ID EN EL INSERT.
+  if id_max is null then -- *Cuando es el primer valor de la tabla.
+   :NEW.id := 1;
+  else  -- cuando es para los demas valores de la tabla.
+    :NEW.id := id_max+1;
+  end if;
+                          --CUANDO REFLEJO LA COLUMNA ID EN EL INSERT.
+elsif id_max is null then  -- *Cuando inserto el primer valor de la tabla
+:NEW.id := 1;
+elsif :NEW.id <> (id_max+1) then -- *Cuando inserto para los demas valores de la tabla.
+:NEW.id := id_max+1;
+end if;  
+end increment_id_usuario;
+
+--------------------------------------------------
+create or replace trigger increment_id_restaurant
+before insert on restaurant
+for each row 
+declare
+id_max restaurant.id%type;
+begin
+select max(id) into id_max from restaurant;
+if :NEW.id is null then   -- CUANDO NO REFLEJO LA COLUMNA ID EN EL INSERT.
+  if id_max is null then -- *Cuando es el primer valor de la tabla.
+   :NEW.id := 1;
+  else  -- cuando es para los demas valores de la tabla.
+    :NEW.id := id_max+1;
+  end if;
+                          --CUANDO REFLEJO LA COLUMNA ID EN EL INSERT.
+elsif id_max is null then  -- *Cuando inserto el primer valor de la tabla
+:NEW.id := 1;
+elsif :NEW.id <> (id_max+1) then -- *Cuando inserto para los demas valores de la tabla.
+:NEW.id := id_max+1;
+end if;  
+end increment_id_restaurant;
+--------------------------------------------------
+create or replace trigger increment_id_promo
+before insert on promo
+for each row 
+declare
+id_max promo.id%type;
+begin
+select max(id) into id_max from promo;
+if :NEW.id is null then   -- CUANDO NO REFLEJO LA COLUMNA ID EN EL INSERT.
+  if id_max is null then -- *Cuando es el primer valor de la tabla.
+   :NEW.id := 1;
+  else  -- cuando es para los demas valores de la tabla.
+    :NEW.id := id_max+1;
+  end if;
+                          --CUANDO REFLEJO LA COLUMNA ID EN EL INSERT.
+elsif id_max is null then  -- *Cuando inserto el primer valor de la tabla
+:NEW.id := 1;
+elsif :NEW.id <> (id_max+1) then -- *Cuando inserto para los demas valores de la tabla.
+:NEW.id := id_max+1;
+end if;  
+end increment_id_promo;
+----------------------------------------------------------
+create or replace trigger increment_id_producto
+before insert on producto
+for each row 
+declare
+id_max producto.id%type;
+begin
+select max(id) into id_max from producto;
+if :NEW.id is null then   -- CUANDO NO REFLEJO LA COLUMNA ID EN EL INSERT.
+  if id_max is null then -- *Cuando es el primer valor de la tabla.
+   :NEW.id := 1;
+  else  -- cuando es para los demas valores de la tabla.
+    :NEW.id := id_max+1;
+  end if;
+                          --CUANDO REFLEJO LA COLUMNA ID EN EL INSERT.
+elsif id_max is null then  -- *Cuando inserto el primer valor de la tabla
+:NEW.id := 1;
+elsif :NEW.id <> (id_max+1) then -- *Cuando inserto para los demas valores de la tabla.
+:NEW.id := id_max+1;
+end if;  
+end increment_id_producto;
+----------------------------------------------------------
+create or replace trigger increment_id_pedido_detal
+before insert on pedido_detal
+for each row 
+declare
+id_max pedido_detal.id%type;
+begin
+select max(id) into id_max from pedido_detal;
+if :NEW.id is null then   -- CUANDO NO REFLEJO LA COLUMNA ID EN EL INSERT.
+  if id_max is null then -- *Cuando es el primer valor de la tabla.
+   :NEW.id := 1;
+  else  -- cuando es para los demas valores de la tabla.
+    :NEW.id := id_max+1;
+  end if;
+                          --CUANDO REFLEJO LA COLUMNA ID EN EL INSERT.
+elsif id_max is null then  -- *Cuando inserto el primer valor de la tabla
+:NEW.id := 1;
+elsif :NEW.id <> (id_max+1) then -- *Cuando inserto para los demas valores de la tabla.
+:NEW.id := id_max+1;
+end if;  
+end increment_id_pedido_detal;
+-------------------------------------------------------------
+create or replace trigger increment_id_pedido
+before insert on pedido
+for each row 
+declare
+id_max pedido.id%type;
+begin
+select max(id) into id_max from pedido;
+if :NEW.id is null then   -- CUANDO NO REFLEJO LA COLUMNA ID EN EL INSERT.
+  if id_max is null then -- *Cuando es el primer valor de la tabla.
+   :NEW.id := 1;
+  else  -- cuando es para los demas valores de la tabla.
+    :NEW.id := id_max+1;
+  end if;
+                          --CUANDO REFLEJO LA COLUMNA ID EN EL INSERT.
+elsif id_max is null then  -- *Cuando inserto el primer valor de la tabla
+:NEW.id := 1;
+elsif :NEW.id <> (id_max+1) then -- *Cuando inserto para los demas valores de la tabla.
+:NEW.id := id_max+1;
+end if;  
+end increment_id_pedido;
+---------------------------------------------------------------
+create or replace trigger increment_id_mensajero
+before insert on mensajero
+for each row 
+declare
+id_max mensajero.id%type;
+begin
+select max(id) into id_max from mensajero;
+if :NEW.id is null then   -- CUANDO NO REFLEJO LA COLUMNA ID EN EL INSERT.
+  if id_max is null then -- *Cuando es el primer valor de la tabla.
+   :NEW.id := 1;
+  else  -- cuando es para los demas valores de la tabla.
+    :NEW.id := id_max+1;
+  end if;
+                          --CUANDO REFLEJO LA COLUMNA ID EN EL INSERT.
+elsif id_max is null then  -- *Cuando inserto el primer valor de la tabla
+:NEW.id := 1;
+elsif :NEW.id <> (id_max+1) then -- *Cuando inserto para los demas valores de la tabla.
+:NEW.id := id_max+1;
+end if;  
+end increment_id_mensajero;
+-----------------------------------------------------------------
+create or replace trigger increment_id_disponibilidad
+before insert on disponibilidad
+for each row 
+declare
+id_max disponibilidad.id%type;
+begin
+select max(id) into id_max from disponibilidad;
+if :NEW.id is null then   -- CUANDO NO REFLEJO LA COLUMNA ID EN EL INSERT.
+  if id_max is null then -- *Cuando es el primer valor de la tabla.
+   :NEW.id := 1;
+  else  -- cuando es para los demas valores de la tabla.
+    :NEW.id := id_max+1;
+  end if;
+                          --CUANDO REFLEJO LA COLUMNA ID EN EL INSERT.
+elsif id_max is null then  -- *Cuando inserto el primer valor de la tabla
+:NEW.id := 1;
+elsif :NEW.id <> (id_max+1) then -- *Cuando inserto para los demas valores de la tabla.
+:NEW.id := id_max+1;
+end if;  
+end increment_id_disponibilidad; 
+----------------------------------------------------------------------
+create or replace trigger increment_id_direccion_user
+before insert on direccion_user
+for each row 
+declare
+id_max direccion_user.id%type;
+begin
+select max(id) into id_max from direccion_user;
+if :NEW.id is null then   -- CUANDO NO REFLEJO LA COLUMNA ID EN EL INSERT.
+  if id_max is null then -- *Cuando es el primer valor de la tabla.
+   :NEW.id := 1;
+  else  -- cuando es para los demas valores de la tabla.
+    :NEW.id := id_max+1;
+  end if;
+                          --CUANDO REFLEJO LA COLUMNA ID EN EL INSERT.
+elsif id_max is null then  -- *Cuando inserto el primer valor de la tabla
+:NEW.id := 1;
+elsif :NEW.id <> (id_max+1) then -- *Cuando inserto para los demas valores de la tabla.
+:NEW.id := id_max+1;
+end if;  
+end increment_id_direccion_user;
+----------------------------------------------------------------------
+create or replace trigger increment_id_direccion
+before insert on direccion
+for each row 
+declare
+id_max direccion.id%type;
+begin
+select max(id) into id_max from direccion;
+if :NEW.id is null then   -- CUANDO NO REFLEJO LA COLUMNA ID EN EL INSERT.
+  if id_max is null then -- *Cuando es el primer valor de la tabla.
+   :NEW.id := 1;
+  else  -- cuando es para los demas valores de la tabla.
+    :NEW.id := id_max+1;
+  end if;
+                          --CUANDO REFLEJO LA COLUMNA ID EN EL INSERT.
+elsif id_max is null then  -- *Cuando inserto el primer valor de la tabla
+:NEW.id := 1;
+elsif :NEW.id <> (id_max+1) then -- *Cuando inserto para los demas valores de la tabla.
+:NEW.id := id_max+1;
+end if;  
+end increment_id_direccion;
+-----------------------------------------------------------------------
+create or replace trigger increment_id_comentario
+before insert on comentario
+for each row 
+declare
+id_max comentario.id%type;
+begin
+select max(id) into id_max from comentario;
+if :NEW.id is null then   -- CUANDO NO REFLEJO LA COLUMNA ID EN EL INSERT.
+  if id_max is null then -- *Cuando es el primer valor de la tabla.
+   :NEW.id := 1;
+  else  -- cuando es para los demas valores de la tabla.
+    :NEW.id := id_max+1;
+  end if;
+                          --CUANDO REFLEJO LA COLUMNA ID EN EL INSERT.
+elsif id_max is null then  -- *Cuando inserto el primer valor de la tabla
+:NEW.id := 1;
+elsif :NEW.id <> (id_max+1) then -- *Cuando inserto para los demas valores de la tabla.
+:NEW.id := id_max+1;
+end if;  
+end increment_id_comentario;
+--------------------------------------------------------------------------
+create or replace trigger increment_id_tipo
+before insert on tipo
+for each row 
+declare
+id_max tipo.id%type;
+begin
+select max(id) into id_max from tipo;
+if :NEW.id is null then   -- CUANDO NO REFLEJO LA COLUMNA ID EN EL INSERT.
+  if id_max is null then -- *Cuando es el primer valor de la tabla.
+   :NEW.id := 1;
+  else  -- cuando es para los demas valores de la tabla.
+    :NEW.id := id_max+1;
+  end if;
+                          --CUANDO REFLEJO LA COLUMNA ID EN EL INSERT.
+elsif id_max is null then  -- *Cuando inserto el primer valor de la tabla
+:NEW.id := 1;
+elsif :NEW.id <> (id_max+1) then -- *Cuando inserto para los demas valores de la tabla.
+:NEW.id := id_max+1;
+end if;  
+end increment_id_tipo;
+--------------------------------------------------------------------------
+create or replace trigger increment_id_pais_tb
+before insert on pais_tb
+for each row 
+declare
+id_max pais_tb.id%type;
+begin
+select max(id) into id_max from pais_tb;
+if :NEW.id is null then   -- CUANDO NO REFLEJO LA COLUMNA ID EN EL INSERT.
+  if id_max is null then -- *Cuando es el primer valor de la tabla.
+   :NEW.id := 1;
+  else  -- cuando es para los demas valores de la tabla.
+    :NEW.id := id_max+1;
+  end if;
+                          --CUANDO REFLEJO LA COLUMNA ID EN EL INSERT.
+elsif id_max is null then  -- *Cuando inserto el primer valor de la tabla
+:NEW.id := 1;
+elsif :NEW.id <> (id_max+1) then -- *Cuando inserto para los demas valores de la tabla.
+:NEW.id := id_max+1;
+end if;  
+end increment_id_pais_tb;
+--------------------------------------------------------------------------
+create or replace trigger increment_id_ciudad_tb
+before insert on ciudad_tb
+for each row 
+declare
+id_max ciudad_tb.id%type;
+begin
+select max(id) into id_max from ciudad_tb;
+if :NEW.id is null then   -- CUANDO NO REFLEJO LA COLUMNA ID EN EL INSERT.
+  if id_max is null then -- *Cuando es el primer valor de la tabla.
+   :NEW.id := 1;
+  else  -- cuando es para los demas valores de la tabla.
+    :NEW.id := id_max+1;
+  end if;
+                          --CUANDO REFLEJO LA COLUMNA ID EN EL INSERT.
+elsif id_max is null then  -- *Cuando inserto el primer valor de la tabla
+:NEW.id := 1;
+elsif :NEW.id <> (id_max+1) then -- *Cuando inserto para los demas valores de la tabla.
+:NEW.id := id_max+1;
+end if;  
+end increment_id_ciudad_tb;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

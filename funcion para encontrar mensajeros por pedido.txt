@@ -1,0 +1,24 @@
+create or replace function find_mensajero
+(id_us in number)
+return number as
+id_ms mensajero.id%type;
+max_id mensajero.id%type;
+no_disp mensajero.id%type;
+ciudad_us mensajero.id%type;
+begin
+
+if id_us is null or id_us <1 then
+return null;
+end if;
+select drs.CIUDAD_TB_ID into ciudad_us from USUARIO us join DIRECCION_USER drs on(us.ID = drs.USUARIO_ID) where us.ID = id_us;
+select count(ms.id) into no_disp from mensajero ms where ms.disponibilidad =1 and ms.ciudad_tb_id = ciudad_us;
+select max(ms.id) into max_id from mensajero ms where ms.ciudad_tb_id = ciudad_us;
+
+if no_disp = max_id then 
+return 0;
+else
+select ms.id  into id_ms from mensajero ms where ms.ciudad_tb_id = ciudad_us and ms.disponibilidad = 0 and rownum <2;
+return id_ms;
+end if;
+  
+end find_mensajero;
